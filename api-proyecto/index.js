@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 
 const Pelicula = require('./models/pelicula')
+const Premio = require('./models/premio')
 const PremioEspe = require('./models/premioEspe')
 
 const app = express()
@@ -88,10 +89,26 @@ app.post('/api/pelicula', (req,res)=>{
 })
 app.post('/api/pelicula/:peliculaId/premio', (req,res)=>{
   let peliculaId = req.params.peliculaId
-  console.log(`POST /api/pelicula/${peliculaId}/premio`)
-  console.log(req.body)
+  Pelicula.findById(peliculaId, (err,pelicula)=>{
+    if(err) return res.status(500).send({message: `Error peticion: ${err}`})
+    console.log(`POST /api/pelicula/${peliculaId}/premio`)
+    console.log(req.body)
 
-  
+    let premio = new Premio()
+    premio.nombre = req.body.nombre
+    premio.imagen = req.body.imagen,
+    premio.categoria = req.body.categoria,
+    premio.recoge = req.body.recoge,
+    premio.gana = req.body.gana
+
+    pelicula.premio[pelicula.premio.length] = premio
+
+    pelicula.save((err,peliculaAlmacenada)=>{
+      if(err)res.status(500).send({message: `Error guardar BD: ${err}`})
+
+      res.status(200).send({pelicula: peliculaAlmacenada})
+    })
+  })
 })
 app.post('/api/premioEspe', (req,res)=>{
   console.log('POST /api/premioEspe')
