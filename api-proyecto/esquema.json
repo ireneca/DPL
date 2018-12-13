@@ -1,0 +1,24 @@
+{
+    "peliculas":[
+        {
+            "titulo":"",
+            "imagen":"",
+            "premios":[
+                {
+                    "nombre":"",
+                    "imagen":"",
+                    "categoria":"",
+                    "recoge":"",
+                    "gana":false
+                }
+            ]
+        }
+    ],
+    "Premios especiales":[
+        {
+            "premio":"",
+            "imagen":"",
+            "nombre":""
+        }
+    ]
+}
